@@ -22,11 +22,11 @@ export class MemberResolver {
 		}
 	}
 
-	@Mutation(() => String || null)
+	@Mutation(() => Member)
 	@UsePipes(ValidationPipe)
-	public async login(@Args('input') input: LoginInput): Promise<null> {
+	public async login(@Args('input') input: LoginInput): Promise<Member> {
 		console.log('Mutation: login');
-		return this.memberService.login();
+		return this.memberService.login(input);
 	}
 
 	@Mutation(() => String)
