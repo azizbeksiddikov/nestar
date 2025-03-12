@@ -5,13 +5,21 @@ import { Member } from '../../libs/dto/member/member';
 import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 import { MemberStatus } from '../../libs/enums/member.enum';
 import { Message } from '../../libs/enums/common.enum';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MemberService {
-	constructor(@InjectModel('Member') private readonly memberModel: Model<Member>) {}
+	constructor(
+		@InjectModel('Member') private readonly memberModel: Model<Member>,
+		private authService: AuthService,
+	) {
+		console.log('MemberService loaded');
+	}
 
 	public async signup(input: MemberInput): Promise<Member> {
+		console.log('Service: signup');
 		// TODO: password hashing
+		input.memberPassword = await this.authService.hashPassword(input.memberPassword);
 
 		try {
 			const result: Member = await this.memberModel.create(input);

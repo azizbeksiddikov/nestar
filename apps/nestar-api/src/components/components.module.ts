@@ -8,6 +8,7 @@ import { FollowModule } from './follow/follow.module';
 import { BoardArticleModule } from './board-article/board-article.module';
 import { CommentModule } from './comment/comment.module';
 
+// each module follows MVC pattern
 @Module({
 	imports: [
 		MemberModule,

@@ -5,7 +5,7 @@ import { Member } from '../../libs/dto/member/member';
 
 @Resolver()
 export class MemberResolver {
-	constructor(private readonly memberService: MemberService) {}
+	constructor(private readonly memberService: MemberService) {} // dependency injection, works becaue of module
 
 	@Mutation(() => Member)
 	public async signup(@Args('input') input: MemberInput): Promise<Member> {
