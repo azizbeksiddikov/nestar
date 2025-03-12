@@ -12,20 +12,17 @@ export class MemberService {
 	constructor(
 		@InjectModel('Member') private readonly memberModel: Model<Member>,
 		private authService: AuthService,
-	) {
-		console.log('MemberService loaded');
-	}
+	) {}
 
 	public async signup(input: MemberInput): Promise<Member> {
-		console.log('Service: signup');
-		// TODO: password hashing
 		input.memberPassword = await this.authService.hashPassword(input.memberPassword);
 
 		try {
-			const result: Member = await this.memberModel.create(input);
-			// TODO: authentication via token
+			// why it is returning password? Password is hidden only for searches?
+			const newMember: Member = await this.memberModel.create(input);
+			newMember.accessToken = await this.authService.createToken(newMember); // auth via token
 
-			return result;
+			return newMember;
 		} catch (err) {
 			console.log('Error: Service.model:', err.message);
 			throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE);
@@ -47,8 +44,9 @@ export class MemberService {
 		}
 
 		// TODO: compare passwords
-		const isMatch = memberPassword === response.memberPassword;
+		const isMatch = await this.authService.comparePasswords(memberPassword, response.memberPassword);
 		if (!isMatch) throw new InternalServerErrorException(Message.WRONG_PASSWORD);
+		response.accessToken = await this.authService.createToken(response);
 
 		return response;
 	}

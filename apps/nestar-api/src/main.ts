@@ -26,6 +26,8 @@ bootstrap();
 // Development cycle of a project
 // Why do we need batch project?
 // Are imports in module/imports happening synchronously?
+// Where we set up the port numbers?
+// How nest reads .env?
 
 /*
 Situation:

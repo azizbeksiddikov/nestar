@@ -19,7 +19,7 @@ export class Member {
 	@Field(() => String)
 	memberPhone: string;
 
-	memberPassword?: string;
+	memberPassword: string;
 
 	@Field(() => String)
 	memberNick: string;
@@ -77,4 +77,7 @@ export class Member {
 
 	@Field(() => Date)
 	updatedAt: Date;
+
+	@Field(() => String, { nullable: true })
+	accessToken?: string;
 }
