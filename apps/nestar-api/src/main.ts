@@ -28,13 +28,13 @@ bootstrap();
 
 /*
 [Konspekt]
-104. UpdateMember va GetMember GraphQL API develop qilamiz
+104. GetAgents, GetAllMembersByAdmin, UpdateMemberByAdmin GraphQL API
 
 Material:
 
+Mongoose $facet
 
 Questions:
-
 
 Docs:
 
