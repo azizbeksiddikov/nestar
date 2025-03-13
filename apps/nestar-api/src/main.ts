@@ -24,28 +24,18 @@ bootstrap();
 // Where we set up the port numbers?
 // How nest reads .env?
 // Why in dto/member/member.input.ts we have memberPassword as optional?
-
-/*
-4. Validation nimani tekshiradi? string ni number ga ozgartirolidimi?
-*/
+// Validation nimani tekshiradi? string ni number ga ozgartirolidimi?
 
 /*
 [Konspekt]
-103. Auth. Guard & Custom Decorators
+104. UpdateMember va GetMember GraphQL API develop qilamiz
 
 Material:
-Authorization & Authentification via Token
-Guards stands between request and controller
+
 
 Questions:
-1. 3ta Authentification turlari?
-2. Browser Storage types? Nega Cookie ishlatdik?
-3. Authorization vs Authentification?
-4. Guards nima?
-5. How guards and decorators in auth work?
+
 
 Docs:
-https://docs.nestjs.com/guards
-https://docs.nestjs.com/custom-decorators
 
 */

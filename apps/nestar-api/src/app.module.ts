@@ -9,12 +9,11 @@ import { ComponentsModule } from './components/components.module';
 import { DatabaseModule } from './database/database.module';
 import { T } from './libs/types/common';
 
-// main module in the entire app
 @Module({
 	imports: [
-		ConfigModule.forRoot(), //
+		ConfigModule.forRoot(),
 		GraphQLModule.forRoot({
-			driver: ApolloDriver, // AppolloDriver =
+			driver: ApolloDriver,
 			playground: true,
 			uploads: false,
 			autoSchemaFile: true,
@@ -28,8 +27,8 @@ import { T } from './libs/types/common';
 				return graphqlFormattedError;
 			},
 		}),
-		ComponentsModule, // HTTP, serves as a bridge
-		DatabaseModule, // TCP
+		ComponentsModule,
+		DatabaseModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, AppResolver],

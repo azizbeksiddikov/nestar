@@ -9,10 +9,11 @@ import { ObjectId } from 'mongoose';
 import { MemberType } from '../../libs/enums/member.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { MemberUpdate } from '../../libs/dto/member/member.update';
 
 @Resolver()
 export class MemberResolver {
-	constructor(private readonly memberService: MemberService) {} // dependency injection, works becaue of module
+	constructor(private readonly memberService: MemberService) {}
 
 	@Mutation(() => Member)
 	public async signup(@Args('input') input: MemberInput): Promise<Member> {
@@ -27,11 +28,14 @@ export class MemberResolver {
 	}
 
 	@UseGuards(AuthGuard) // authentification
-	@Mutation(() => String)
-	public async updateMember(@AuthMember('_id') memberId: ObjectId): Promise<string> {
+	@Mutation(() => Member)
+	public async updateMember(
+		@Args('input') input: MemberUpdate,
+		@AuthMember('_id') memberId: ObjectId,
+	): Promise<Member> {
 		console.log('Mutation: updateMember');
-		console.log(typeof memberId);
-		return this.memberService.updateMember();
+		delete input._id;
+		return this.memberService.updateMember(memberId, input);
 	}
 
 	@UseGuards(AuthGuard)
@@ -43,7 +47,7 @@ export class MemberResolver {
 	}
 
 	@Roles(MemberType.USER)
-	@UseGuards(RolesGuard)
+	@UseGuards(RolesGuard) // authorization
 	@Query(() => String)
 	public async checkAuthRoles(@AuthMember() authMember: Member): Promise<string> {
 		console.log('Query: checkAuthRoles');
@@ -58,7 +62,6 @@ export class MemberResolver {
 
 	/** ADMIN **/
 
-	// Authorization: Admin
 	@Roles(MemberType.ADMIN)
 	@UseGuards(RolesGuard)
 	@Mutation(() => String)
@@ -66,9 +69,8 @@ export class MemberResolver {
 		return this.memberService.getAllMembersByAdmin();
 	}
 
-	// Authorization: Admin
 	@Mutation(() => String)
 	public async updateMemberByAdmin(): Promise<string> {
-		return this.memberService.updateMember();
+		return this.memberService.updateMemberByAdmin();
 	}
 }
