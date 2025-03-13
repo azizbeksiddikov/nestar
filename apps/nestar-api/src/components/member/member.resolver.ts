@@ -30,4 +30,18 @@ export class MemberResolver {
 		console.log('Query: getMember');
 		return this.memberService.getMember();
 	}
+
+	/** ADMIN **/
+
+	// Authorization: Admin
+	@Mutation(() => String)
+	public async getAllMembersByAdmin(): Promise<string> {
+		return this.memberService.getAllMembersByAdmin();
+	}
+
+	// Authorization: Admin
+	@Mutation(() => String)
+	public async updateMemberByAdmin(): Promise<string> {
+		return this.memberService.updateMember();
+	}
 }

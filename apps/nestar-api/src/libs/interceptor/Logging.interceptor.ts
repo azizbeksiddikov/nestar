@@ -7,9 +7,10 @@ import { tap } from 'rxjs/operators';
 export class LoggingInterceptor implements NestInterceptor {
 	private readonly logger: Logger = new Logger();
 
+	// Implements the required intercept method that runs before and after request handling.
 	public intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-		const recordTime = Date.now();
-		const requestType = context.getType<GqlContextType>();
+		const recordTime = Date.now(); // Records the start time to calculate request duration later.
+		const requestType = context.getType<GqlContextType>(); // Determines if the request is HTTP or GraphQL.
 
 		if (requestType === 'http') {
 			// Develop if needed

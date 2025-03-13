@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -10,7 +10,6 @@ import { DatabaseModule } from './database/database.module';
 import { T } from './libs/types/common';
 
 // main module in the entire app
-
 @Module({
 	imports: [
 		ConfigModule.forRoot(), //
