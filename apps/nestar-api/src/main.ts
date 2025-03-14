@@ -28,18 +28,17 @@ bootstrap();
 
 /*
 [Konspekt]
-105. GetAgents, GetAllMembersByAdmin, UpdateMemberByAdmin GraphQL API
+106. Serverga GraphQL orqali file yukalash jarayonini hosil qilamiz
+107. Property - createProperty GraphQL API develop qilamiz
 
 Material:
-GetAgents
-Mongoose $facet
-getAllMembersByAdmin
-UpdateMemberByAdmin
+
 
 Questions:
-1. How to use $facet in mongoose?
-2. In MongoDB sometimes we pass ObjectId, sometimes string. Why?
+1. 
 
 Docs:
+https://www.npmjs.com/package/graphql-upload
+https://github.com/jaydenseric/graphql-multipart-request-spec
 
 */
