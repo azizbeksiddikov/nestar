@@ -28,13 +28,17 @@ bootstrap();
 
 /*
 [Konspekt]
-104. GetAgents, GetAllMembersByAdmin, UpdateMemberByAdmin GraphQL API
+105. GetAgents, GetAllMembersByAdmin, UpdateMemberByAdmin GraphQL API
 
 Material:
-
+GetAgents
 Mongoose $facet
+getAllMembersByAdmin
+UpdateMemberByAdmin
 
 Questions:
+1. How to use $facet in mongoose?
+2. In MongoDB sometimes we pass ObjectId, sometimes string. Why?
 
 Docs:
 
