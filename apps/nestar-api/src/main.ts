@@ -40,6 +40,7 @@ bootstrap();
 Material:
 imageUpload (multer => graphql-upload)
 Cors integration
+Property Model Creation
 
 Questions:
 1. 
