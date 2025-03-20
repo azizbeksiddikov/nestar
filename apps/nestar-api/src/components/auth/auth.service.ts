@@ -15,7 +15,7 @@ export class AuthService {
 	}
 
 	public async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
-		return await bcrypt.compare(password, hashedPassword); // compare method is async
+		return await bcrypt.compare(password, hashedPassword); // compare method is async, how compares without password? if no salt is given, how it compares?
 	}
 
 	public async createToken(member: Member): Promise<string> {
