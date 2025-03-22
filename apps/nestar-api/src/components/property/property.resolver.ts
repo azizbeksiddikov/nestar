@@ -98,8 +98,17 @@ export class PropertyResolver {
 	@UseGuards(RolesGuard)
 	@Mutation(() => Property)
 	public async updatePropertybyAdmin(@Args('input') input: PropertyUpdate): Promise<Property> {
-		console.log('Query: updatePropertybyAdmin');
+		console.log('Mutation: updatePropertybyAdmin');
 		input._id = shapeIntoMongoObjectId(input._id);
 		return await this.propertyService.updatePropertybyAdmin(input);
+	}
+
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Mutation(() => Property)
+	public async removePropertybyAdmin(@Args('propertyId') input: string): Promise<Property> {
+		console.log('Mutation: removePropertybyAdmin');
+		const propertyId = shapeIntoMongoObjectId(input);
+		return await this.propertyService.removePropertybyAdmin(propertyId);
 	}
 }
