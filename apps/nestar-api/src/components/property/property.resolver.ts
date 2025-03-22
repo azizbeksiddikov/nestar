@@ -9,6 +9,8 @@ import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { ObjectId } from 'mongoose';
+import { WithoutGuard } from '../auth/guards/without.guard';
+import { shapeIntoMongoObjectId } from '../../libs/config';
 
 @Resolver()
 export class PropertyResolver {
@@ -25,5 +27,17 @@ export class PropertyResolver {
 		input.memberId = memberId;
 
 		return await this.propertyService.createProperty(input);
+	}
+
+	@UseGuards(WithoutGuard)
+	@Query(() => Property)
+	public async getProperty(
+		@Args('propertyId') input: string,
+		@AuthMember('_id') memberId: ObjectId | null,
+	): Promise<Property> {
+		console.log('Query: getProperty');
+		const propertyID = shapeIntoMongoObjectId(input);
+
+		return await this.propertyService.getProperty(memberId, propertyID);
 	}
 }
