@@ -10,6 +10,8 @@ import { PropertyStatus } from '../../libs/enums/property.enum';
 import { StatisticModifier, T } from '../../libs/types/common';
 import { ViewInput } from '../../libs/dto/view/view.input';
 import { ViewGroup } from '../../libs/enums/view.enum';
+import { PropertyUpdate } from '../../libs/dto/property/property.update';
+import moment from 'moment';
 
 @Injectable()
 export class PropertyService {
@@ -61,5 +63,37 @@ export class PropertyService {
 		return (await this.propertyModel
 			.findByIdAndUpdate({ _id }, { $inc: { [targetKey]: modifier } }, { new: true })
 			.exec()) as unknown as Property;
+	}
+
+	public async updateProperty(memberId: ObjectId, input: PropertyUpdate): Promise<Property> {
+		// 1. We didnt update the soldAt and deletedAt fields in the database. We need to update them
+		// 2. MongoDB error: dupplicate key error
+		// 3. "propertyStatus": "SOLD"?  INTERNAL_SERVER_ERROR: "message": "(0 , moment_1.default) is not a function"
+		// moment  considered legacy. Use other alternatives
+		let { propertyStatus, soldAt, deletedAt } = input;
+		console.log('propertyStatus:', propertyStatus);
+		console.log('soldAt:', soldAt);
+		console.log('deletedAt:', deletedAt);
+
+		const search: T = {
+			_id: input._id,
+			memberId: memberId,
+			propertyStatus: PropertyStatus.ACTIVE,
+		};
+
+		// if (propertyStatus === PropertyStatus.SOLD) soldAt = moment().toDate();
+		// else if (propertyStatus === PropertyStatus.DELETE) deletedAt = moment().toDate();
+
+		if (propertyStatus === PropertyStatus.SOLD) soldAt = new Date();
+		else if (propertyStatus === PropertyStatus.DELETE) deletedAt = new Date();
+
+		const result = await this.propertyModel.findOneAndUpdate(search, input, { new: true }).exec();
+		if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
+
+		if (soldAt || deletedAt) {
+			await this.memberService.memberStatsEditor({ _id: memberId, targetKey: 'memberProperties', modifier: -1 });
+		}
+
+		return result;
 	}
 }
