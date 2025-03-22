@@ -89,8 +89,17 @@ export class PropertyResolver {
 	public async getAllPropertiesbyAdmin(
 		@Args('input') input: AllPropertiesInquiry,
 		@AuthMember('_id') memberId: ObjectId,
-	) {
+	): Promise<Properties> {
 		console.log('Query: getAllPropertiesbyAdmin');
-		return await this.propertyService.getAllPropertiesbyAdmin(memberId, input);
+		return await this.propertyService.getAllPropertiesbyAdmin(input);
+	}
+
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Mutation(() => Property)
+	public async updatePropertybyAdmin(@Args('input') input: PropertyUpdate): Promise<Property> {
+		console.log('Query: updatePropertybyAdmin');
+		input._id = shapeIntoMongoObjectId(input._id);
+		return await this.propertyService.updatePropertybyAdmin(input);
 	}
 }
