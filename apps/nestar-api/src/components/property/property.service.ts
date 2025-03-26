@@ -19,6 +19,7 @@ import { ViewGroup } from '../../libs/enums/view.enum';
 import { PropertyUpdate } from '../../libs/dto/property/property.update';
 import moment from 'moment';
 import { lookupMember, shapeIntoMongoObjectId } from '../../libs/config';
+import { View } from '../../libs/dto/view/view';
 
 @Injectable()
 export class PropertyService {
@@ -51,7 +52,7 @@ export class PropertyService {
 
 		if (memberId) {
 			const viewInput: ViewInput = { memberId: memberId, viewRefId: propertyId, viewGroup: ViewGroup.PROPERTY };
-			const newView = await this.viewService.recordView(viewInput);
+			const newView: View | null = await this.viewService.recordView(viewInput);
 
 			if (newView) {
 				await this.propertyStatsEditor({ _id: propertyId, targetKey: 'propertyViews', modifier: 1 });
