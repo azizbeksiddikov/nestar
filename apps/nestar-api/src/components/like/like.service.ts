@@ -28,7 +28,6 @@ export class LikeService {
 			}
 		}
 
-		console.log('Like modifier', modifier);
 		return modifier;
 	}
 }

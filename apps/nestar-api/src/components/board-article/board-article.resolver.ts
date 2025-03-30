@@ -56,11 +56,22 @@ export class BoardArticleResolver {
 	@UseGuards(WithoutGuard)
 	@Query((returns) => BoardArticles)
 	public async getBoardArticles(
-		@Args('articleId') input: BoardArticlesInquiry,
+		@Args('input') input: BoardArticlesInquiry,
 		@AuthMember('_id') memberId: ObjectId | null,
 	): Promise<BoardArticles> {
 		console.log('Query: getBoardArticles');
 		return await this.boardArticleService.getBoardArticles(memberId, input);
+	}
+
+	@UseGuards(AuthGuard)
+	@Mutation(() => BoardArticle)
+	public async likeTargetBoardArticle(
+		@Args('articleId') input: string,
+		@AuthMember('_id') memberId: ObjectId,
+	): Promise<BoardArticle> {
+		console.log('Mutation: likeTargetBoardArticle');
+		const likeRefId = shapeIntoMongoObjectId(input);
+		return await this.boardArticleService.likeTargetBoardArticle(memberId, likeRefId);
 	}
 
 	/** ADMIN **/

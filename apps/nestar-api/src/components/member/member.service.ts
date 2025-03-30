@@ -185,7 +185,7 @@ export class MemberService {
 		const { _id, targetKey, modifier } = input;
 
 		return (await this.memberModel
-			.findByIdAndUpdate(_id, { $inc: { [targetKey]: modifier } })
+			.findByIdAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true })
 			.exec()) as unknown as Member;
 	}
 }
