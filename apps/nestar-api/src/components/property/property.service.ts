@@ -67,10 +67,6 @@ export class PropertyService {
 	}
 
 	public async updateProperty(memberId: ObjectId, input: PropertyUpdate): Promise<Property> {
-		// 1. We didnt update the soldAt and deletedAt fields in the database. We need to update them
-		// 2. MongoDB error: dupplicate key error
-		// 3. "propertyStatus": "SOLD"?  INTERNAL_SERVER_ERROR: "message": "(0 , moment_1.default) is not a function"
-		// moment  considered legacy. Use other alternatives
 		let { propertyStatus, soldAt, deletedAt } = input;
 		console.log('propertyStatus:', propertyStatus);
 		console.log('soldAt:', soldAt);
@@ -81,9 +77,6 @@ export class PropertyService {
 			memberId: memberId,
 			propertyStatus: PropertyStatus.ACTIVE,
 		};
-
-		// if (propertyStatus === PropertyStatus.SOLD) soldAt = moment().toDate();
-		// else if (propertyStatus === PropertyStatus.DELETE) deletedAt = moment().toDate();
 
 		if (propertyStatus === PropertyStatus.SOLD) soldAt = new Date();
 		else if (propertyStatus === PropertyStatus.DELETE) deletedAt = new Date();
