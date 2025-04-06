@@ -106,6 +106,8 @@ export class FollowService {
 							{ $skip: (page - 1) * limit },
 							{ $limit: limit },
 							lookupAuthMemberLiked(memberId, '$followerId'),
+							lookupAuthMemberFollowed({ followerId: memberId, followingId: '$followerId' }),
+
 							lookupFollowerData,
 							{ $unwind: '$followerData' },
 						],
