@@ -1,4 +1,5 @@
 import { ObjectId } from 'bson';
+import { ObjectId as MongooseId } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 import { T } from './types/common';
@@ -29,7 +30,7 @@ export const shapeIntoMongoObjectId = (target: any) => {
 	return typeof target === 'string' ? new ObjectId(target) : target;
 };
 
-export const lookupAuthMemberLiked = (memberId: T, targetRefId: string = '$_id') => {
+export const lookupAuthMemberLiked = (memberId: MongooseId | null, targetRefId: string = '$_id') => {
 	return {
 		$lookup: {
 			from: 'likes',
