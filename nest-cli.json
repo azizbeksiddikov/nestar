@@ -19,7 +19,7 @@
 				"tsConfigPath": "apps/nestar-api/tsconfig.app.json"
 			}
 		},
-		"nestars-batch": {
+		"nestar-batch": {
 			"type": "application",
 			"root": "apps/nestar-batch",
 			"entryFile": "main",
